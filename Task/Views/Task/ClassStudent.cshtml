@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Task.Models.classEnrolment>
+
+@{
+    ViewBag.Title = "ClassStudent";
+}
+
+<h2>Students Classes</h2>
+@{
+    List<SelectListItem> cla = ViewBag.Classes;
+}
+
+@Html.DropDownList("OSRddl", cla, "Filter By Class Name", new { @class = "form-control" })
+
+<br />
+
+<p>
+    @Html.ActionLink("Create New", "ClassEnrolment")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            First Name
+        </th>
+        <th>
+            Second Name
+        </th>
+        <th>
+            Gender
+        </th>
+        <th>
+            Mobile
+        </th>
+        <th>
+            Class Name
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.firstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.secondName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.Gender1.GenderName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class.className)
+            </td>
+
+        </tr>
+    }
+
+</table>

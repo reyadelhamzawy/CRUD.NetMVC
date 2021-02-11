@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Task.Models.Class>
+
+@{
+    ViewBag.Title = "Classes";
+}
+
+<h2>Classes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddClass")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.className)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.classGender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.classCapacity)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.className)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender.GenderName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.classCapacity)
+        </td>
+    </tr>
+}
+
+</table>

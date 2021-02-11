@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TaskModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="classEnrolment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="stId" Type="int" Nullable="false" />
+          <Property Name="classId" Type="int" Nullable="false" />
+          <Property Name="note" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="classId" />
+          </Key>
+          <Property Name="classId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="className" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="classGender" Type="int" Nullable="false" />
+          <Property Name="classCapacity" Type="int" Nullable="false" />
+          <Property Name="count" Type="int" />
+        </EntityType>
+        <EntityType Name="Genders">
+          <Key>
+            <PropertyRef Name="GenderId" />
+          </Key>
+          <Property Name="GenderId" Type="int" Nullable="false" />
+          <Property Name="GenderName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="StId" />
+          </Key>
+          <Property Name="StId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="secondName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="int" Nullable="false" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_classEnrolment_Classes">
+          <End Role="Classes" Type="Self.Classes" Multiplicity="1" />
+          <End Role="classEnrolment" Type="Self.classEnrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Classes">
+              <PropertyRef Name="classId" />
+            </Principal>
+            <Dependent Role="classEnrolment">
+              <PropertyRef Name="classId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_classEnrolment_Students">
+          <End Role="Students" Type="Self.Students" Multiplicity="1" />
+          <End Role="classEnrolment" Type="Self.classEnrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StId" />
+            </Principal>
+            <Dependent Role="classEnrolment">
+              <PropertyRef Name="stId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classes_Genders">
+          <End Role="Genders" Type="Self.Genders" Multiplicity="1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genders">
+              <PropertyRef Name="GenderId" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="classGender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Students_Genders">
+          <End Role="Genders" Type="Self.Genders" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genders">
+              <PropertyRef Name="GenderId" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="Gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TaskModelStoreContainer">
+          <EntitySet Name="classEnrolment" EntityType="Self.classEnrolment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genders" EntityType="Self.Genders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_classEnrolment_Classes" Association="Self.FK_classEnrolment_Classes">
+            <End Role="Classes" EntitySet="Classes" />
+            <End Role="classEnrolment" EntitySet="classEnrolment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_classEnrolment_Students" Association="Self.FK_classEnrolment_Students">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="classEnrolment" EntitySet="classEnrolment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classes_Genders" Association="Self.FK_Classes_Genders">
+            <End Role="Genders" EntitySet="Genders" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Students_Genders" Association="Self.FK_Students_Genders">
+            <End Role="Genders" EntitySet="Genders" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TaskModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TaskEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="classEnrolments" EntityType="TaskModel.classEnrolment" />
+          <EntitySet Name="Classes" EntityType="TaskModel.Class" />
+          <EntitySet Name="Genders" EntityType="TaskModel.Gender" />
+          <EntitySet Name="Students" EntityType="TaskModel.Student" />
+          <AssociationSet Name="FK_classEnrolment_Classes" Association="TaskModel.FK_classEnrolment_Classes">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="classEnrolment" EntitySet="classEnrolments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_classEnrolment_Students" Association="TaskModel.FK_classEnrolment_Students">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="classEnrolment" EntitySet="classEnrolments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Classes_Genders" Association="TaskModel.FK_Classes_Genders">
+            <End Role="Gender" EntitySet="Genders" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Students_Genders" Association="TaskModel.FK_Students_Genders">
+            <End Role="Gender" EntitySet="Genders" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="classEnrolment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="stId" Type="Int32" Nullable="false" />
+          <Property Name="classId" Type="Int32" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Class" Relationship="TaskModel.FK_classEnrolment_Classes" FromRole="classEnrolment" ToRole="Class" />
+          <NavigationProperty Name="Student" Relationship="TaskModel.FK_classEnrolment_Students" FromRole="classEnrolment" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="classId" />
+          </Key>
+          <Property Name="classId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="className" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="classGender" Type="Int32" Nullable="false" />
+          <Property Name="classCapacity" Type="Int32" Nullable="false" />
+          <Property Name="count" Type="Int32" />
+          <NavigationProperty Name="classEnrolments" Relationship="TaskModel.FK_classEnrolment_Classes" FromRole="Class" ToRole="classEnrolment" />
+          <NavigationProperty Name="Gender" Relationship="TaskModel.FK_Classes_Genders" FromRole="Class" ToRole="Gender" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="GenderId" />
+          </Key>
+          <Property Name="GenderId" Type="Int32" Nullable="false" />
+          <Property Name="GenderName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Classes" Relationship="TaskModel.FK_Classes_Genders" FromRole="Gender" ToRole="Class" />
+          <NavigationProperty Name="Students" Relationship="TaskModel.FK_Students_Genders" FromRole="Gender" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StId" />
+          </Key>
+          <Property Name="StId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="secondName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Int32" Nullable="false" />
+          <Property Name="mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="classEnrolments" Relationship="TaskModel.FK_classEnrolment_Students" FromRole="Student" ToRole="classEnrolment" />
+          <NavigationProperty Name="Gender1" Relationship="TaskModel.FK_Students_Genders" FromRole="Student" ToRole="Gender" />
+        </EntityType>
+        <Association Name="FK_classEnrolment_Classes">
+          <End Type="TaskModel.Class" Role="Class" Multiplicity="1" />
+          <End Type="TaskModel.classEnrolment" Role="classEnrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="classId" />
+            </Principal>
+            <Dependent Role="classEnrolment">
+              <PropertyRef Name="classId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_classEnrolment_Students">
+          <End Type="TaskModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="TaskModel.classEnrolment" Role="classEnrolment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StId" />
+            </Principal>
+            <Dependent Role="classEnrolment">
+              <PropertyRef Name="stId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Classes_Genders">
+          <End Type="TaskModel.Gender" Role="Gender" Multiplicity="1" />
+          <End Type="TaskModel.Class" Role="Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderId" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="classGender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Students_Genders">
+          <End Type="TaskModel.Gender" Role="Gender" Multiplicity="1" />
+          <End Type="TaskModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderId" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="Gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TaskModelStoreContainer" CdmEntityContainer="TaskEntities">
+          <EntitySetMapping Name="classEnrolments">
+            <EntityTypeMapping TypeName="TaskModel.classEnrolment">
+              <MappingFragment StoreEntitySet="classEnrolment">
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="classId" ColumnName="classId" />
+                <ScalarProperty Name="stId" ColumnName="stId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="TaskModel.Class">
+              <MappingFragment StoreEntitySet="Classes">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="classCapacity" ColumnName="classCapacity" />
+                <ScalarProperty Name="classGender" ColumnName="classGender" />
+                <ScalarProperty Name="className" ColumnName="className" />
+                <ScalarProperty Name="classId" ColumnName="classId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="TaskModel.Gender">
+              <MappingFragment StoreEntitySet="Genders">
+                <ScalarProperty Name="GenderName" ColumnName="GenderName" />
+                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="TaskModel.Student">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="secondName" ColumnName="secondName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="StId" ColumnName="StId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

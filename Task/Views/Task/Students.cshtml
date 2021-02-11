@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Task.Models.Student>
+
+@{
+    ViewBag.Title = "Students";
+}
+
+<h2>Students</h2>
+
+<p>
+    @Html.ActionLink("Create New", "AddStudent")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.firstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.secondName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mobile)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.firstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.secondName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender1.GenderName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mobile)
+        </td>
+
+    </tr>
+}
+
+</table>
